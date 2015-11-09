@@ -52,7 +52,7 @@ end
 
 function LoadSettings()
 	local Path = g_Plugin:GetLocalFolder() .. "/config.cfg"
-	if (not cFile:Exists(Path)) then
+	if (not cFile:IsFile(Path)) then
 		LOGWARNING("[TreeAssist] The config file doesn't exist. TreeAssist will use the default settings for now")
 		LoadDefaultSettings()
 		return
