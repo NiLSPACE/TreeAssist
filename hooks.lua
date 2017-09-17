@@ -7,14 +7,9 @@
 
 
 
-function OnPlayerLeftClick(a_Player, a_BlockX, a_BlockY, a_BlockZ, a_BlockFace, a_Action)
+function OnPlayerBreakingBlock(a_Player, a_BlockX, a_BlockY, a_BlockZ, a_BlockFace, a_BlockType, a_BlockMeta)
 	-- Check if the user should only be allowed to use survival with this plugin
 	if (g_Config.SurvivalOnly and not a_Player:IsGameModeSurvival()) then
-		return false
-	end
-	
-	-- Check if this is actualy a left click.
-	if (a_Action ~= 0) then
 		return false
 	end
 	
@@ -29,7 +24,7 @@ function OnPlayerLeftClick(a_Player, a_BlockX, a_BlockY, a_BlockZ, a_BlockFace, 
 		return false
 	end
 	
-	-- Check if the block that is about to be digged up is wood
+	-- Check if the block that is about to be broken is wood
 	local World = a_Player:GetWorld()
 	local BlockType = World:GetBlock(a_BlockX, a_BlockY, a_BlockZ)
 	if (not ItemCategory.IsWood(BlockType)) then
@@ -56,12 +51,12 @@ function OnPlayerLeftClick(a_Player, a_BlockX, a_BlockY, a_BlockZ, a_BlockFace, 
 	end
 	
 	Collection:Finish()
-	
+
 	if (g_Config.ReplantSapling) then
-		World:QueueSetBlock(a_BlockX, a_BlockY, a_BlockZ, E_BLOCK_SAPLING, GetSaplingMeta(BlockType, BlockMeta), g_Config.SaplingPlantTime)
+		if (math.random() < g_Config.ReplantSaplingRate) then
+			World:SetBlock(a_BlockX, a_BlockY, a_BlockZ, E_BLOCK_SAPLING, GetSaplingMeta(BlockType, BlockMeta))
+		end
 	end
+
 end
-
-
-
 

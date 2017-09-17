@@ -14,6 +14,7 @@ Collection       = "pickups",
 SurvivalOnly     = false,
 ReplantSapling   = true,
 SaplingPlantTime = 25,
+ReplantSaplingRate = 0.2,
 ]]
 
 
